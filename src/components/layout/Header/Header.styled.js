@@ -4,8 +4,6 @@ import { NavLink } from "react-router-dom";
 export const HeaderBox = styled.header`
   display: flex;
   width: inherit;
-  margin-top: 20px;
-  margin-bottom: 25px;
   box-shadow: 0px 10px 19px -3px rgba(148, 148, 148, 1);
   border-radius: 16px;
   background: linear-gradient(
@@ -18,9 +16,12 @@ export const HeaderBox = styled.header`
 export const List = styled.ul`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 40px;
   height: 60px;
+  width: 100%;
   margin-left: 40px;
+  margin-right: 40px;
 `;
 
 export const PageLink = styled(NavLink)`

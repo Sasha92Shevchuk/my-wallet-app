@@ -10,6 +10,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 60px;
 `;
 
 export const Main = styled.main`
@@ -18,5 +19,5 @@ export const Main = styled.main`
   gap: 20px;
   align-items: center;
   max-width: 1280px;
-  min-height: calc(100vh - 100px);
+  /* min-height: calc(100vh - 100px); */
 `;
