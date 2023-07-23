@@ -1,17 +1,24 @@
 import { useState } from "react";
+// import { ethers } from "ethers";
 import { Form, Label } from "./TokenTransferForm.styled";
+import { transferToken } from "../../helpers/api";
 
 export const TokenTransferForm = () => {
   const [recipientAddress, setRecipientAddress] = useState("");
   const [tokenAmount, setTokenAmount] = useState("");
 
+  // Адреса отримувача токенів
+  // const recipientAddress = "RECIPIENT_ADDRESS"; // from state
+  // Кількість токенів, які потрібно відправити
+  //utils.parseEther() // - в доках назва така!!!!!!!!!!!!! було utils.parseUnits
+  // const tokenAmountToNumber = ethers.utils.parseEther(tokenAmount);
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    // Тут можна реалізувати логіку відправки токенів
-    // Ви можете використовувати Web3.js або інші бібліотеки для взаємодії з Ethereum мережею
+    //const tokenAmountToNumber = ethers.utils.parseEther(tokenAmount);
+    transferToken(recipientAddress, tokenAmount);
 
-    // Приклад виводу в консоль (для демонстраційних цілей)
     console.log(
       "Відправити",
       tokenAmount,

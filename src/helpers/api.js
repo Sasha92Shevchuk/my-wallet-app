@@ -1,5 +1,13 @@
 import { ethers } from "ethers";
 
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer = provider.getSigner();
+
+// Адреса контракту токена
+let tokenContractAddress = "";
+// ABI контракту токена (масив)
+//let tokenContractABI = []; // Замініть на відповідний ABI вашого контракту токена
+
 const checkAndRedirectToInstall = () => {
   if (typeof window.ethereum === "undefined") {
     const result = confirm(
@@ -59,36 +67,15 @@ export const connectWallet = async () => {
 
   try {
     await window.ethereum.request({ method: "eth_requestAccounts" });
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const signer = provider.getSigner();
     const connectedAddress = await signer.getAddress();
+    tokenContractAddress = connectedAddress;
     const balance = await signer.getBalance();
 
     const balanceInEther = ethers.utils.formatEther(balance);
-    const roundedBalance = parseFloat(balanceInEther).toFixed(3);
+    const roundedBalance = parseFloat(balanceInEther).toFixed(6);
 
-    // const daiAddress = "dai.tokens.ethers.eth";
-    // const daiAbi = [
-    //   // Some details about the token
-    //   "function name() view returns (string)",
-    //   "function symbol() view returns (string)",
-
-    //   // Get the account balance
-    //   "function balanceOf(address) view returns (uint)",
-
-    //   // Send some of your tokens to someone else
-    //   "function transfer(address to, uint amount)",
-
-    //   // An event triggered whenever anyone transfers to someone else
-    //   "event Transfer(address indexed from, address indexed to, uint amount)",
-    // ];
-    // const daiContract = new ethers.Contract(daiAddress, daiAbi, provider);
-    // const tokenName = await daiContract.name();
-    // console.log("connectWal ~ a:", tokenName);
-    // const tokenSymbol = await daiContract.symbol();
-    // console.log("connectWal ~ tokenSymbol:", tokenSymbol);
-    // const testbalance = await daiContract.balanceOf("ricmoo.firefly.eth");
-    // console.log("connectWal ~ testbalance:", testbalance);
     return {
       address: connectedAddress,
       balance: roundedBalance,
@@ -99,5 +86,45 @@ export const connectWallet = async () => {
       address: "",
       balance: "",
     };
+  }
+};
+
+export const transferToken = async (recipientAddress, tokenAmount) => {
+  if (!signer || !provider) throw Error("No wallet found");
+  console.log(signer, provider);
+  try {
+    //     // Створюємо екземпляр контракту токена !!!!жпт версія
+    //     const tokenContract = new ethers.Contract(
+    //       tokenContractAddress,
+    //       tokenContractABI,
+    //       signer
+    //     );
+
+    //     // Викликаємо функцію transfer на контракті токена
+    //     const transaction = await tokenContract.transfer(
+    //       recipientAddress,
+    //       tokenAmount
+    //     );
+
+    //     // Очікуємо на підтвердження транзакції
+    //     await transaction.wait();
+
+    // моя версія згідно доків
+    // Send Ether
+    const tokenAmountToNumber = ethers.utils.parseEther(tokenAmount);
+    const transaction = await signer.sendTransaction({
+      to: recipientAddress,
+      value: tokenAmountToNumber,
+    });
+    // Wait transaction
+    await transaction.wait();
+    console.log("transfer from ", tokenContractAddress);
+    console.log("transfer to", recipientAddress);
+    console.log("amount token to transfer", tokenAmount);
+    console.log("Трансфер токенів успішно виконано!");
+
+    console.log(transaction);
+  } catch (error) {
+    console.error("Помилка при виконанні трансферу токенів:", error);
   }
 };

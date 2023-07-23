@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { connectWallet } from "../../../helpers/connectWallet";
+import { connectWallet } from "../../../helpers/api";
 import {
   ConnectButton,
   HeaderBox,
