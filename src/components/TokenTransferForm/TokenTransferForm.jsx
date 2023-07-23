@@ -1,23 +1,19 @@
 import { useState } from "react";
 // import { ethers } from "ethers";
 import { Form, Label } from "./TokenTransferForm.styled";
-import { transferToken } from "../../helpers/api";
+// import { transferToken } from "../../helpers/api";
+import { useTransferToken } from "../../hooks/useTransferToken";
 
 export const TokenTransferForm = () => {
   const [recipientAddress, setRecipientAddress] = useState("");
   const [tokenAmount, setTokenAmount] = useState("");
 
-  // Адреса отримувача токенів
-  // const recipientAddress = "RECIPIENT_ADDRESS"; // from state
-  // Кількість токенів, які потрібно відправити
-  //utils.parseEther() // - в доках назва така!!!!!!!!!!!!! було utils.parseUnits
-  // const tokenAmountToNumber = ethers.utils.parseEther(tokenAmount);
+  const { transferToken, isTransactionPending } = useTransferToken();
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    //const tokenAmountToNumber = ethers.utils.parseEther(tokenAmount);
-    transferToken(recipientAddress, tokenAmount);
+    await transferToken(recipientAddress, tokenAmount);
 
     console.log(
       "Відправити",
@@ -26,7 +22,6 @@ export const TokenTransferForm = () => {
       recipientAddress
     );
 
-    // Очищення полів після відправки
     setRecipientAddress("");
     setTokenAmount("");
   };
@@ -54,7 +49,9 @@ export const TokenTransferForm = () => {
             required
           />
         </Label>
-        <button type="submit">Button</button>
+        <button type="submit" disabled={isTransactionPending}>
+          {isTransactionPending ? "Transaction Pending..." : "Button"}
+        </button>
       </Form>
     </>
   );
