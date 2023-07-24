@@ -1,5 +1,5 @@
-// import { useEffect } from "react";
-// import { ethers } from "ethers";
+import { useEffect, useState } from "react";
+import { ethers } from "ethers";
 // import { connectWallet } from "../../../helpers/api";
 import {
   ConnectButton,
@@ -8,20 +8,55 @@ import {
   PageLink,
 } from "./Header.styled";
 import { useConnectWallet } from "../../../hooks/useConnectWallet";
+// import { useProviderAndSigner } from "../../../hooks/useProviderAndSigner";
 
 export const Header = () => {
-  const { connectedAddress, balance, isConnecting, connectWallet } =
-    useConnectWallet();
+  const { isConnecting, connectWallet } = useConnectWallet();
+  const [address, setAddress] = useState(
+    localStorage.getItem("connectedAddress")
+  );
+  const [amountToken, setAmountToken] = useState("");
 
-  // useEffect(() => {
-  //   const storedConnectedAddress = localStorage.getItem("connectedAddress");
-  //   if (storedConnectedAddress) {
-  //     connectWallet();
-  //   }
-  // }, []);
+  // const { createProviderAndSigner } = useProviderAndSigner();
+
+  useEffect(() => {
+    const loadWalletData = async () => {
+      try {
+        // const storedConnectedAddress = localStorage.getItem("connectedAddress");
+        if (address) {
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const bal = await provider.getSigner().getBalance();
+          const balanceInEther = ethers.utils.formatEther(bal);
+          const roundedBalance = parseFloat(balanceInEther).toFixed(6);
+          setAmountToken(roundedBalance);
+        }
+      } catch (error) {
+        console.error("Error loading wallet data:", error);
+      }
+    };
+
+    loadWalletData();
+
+    // const loadWalletData = async () => {
+    //   try {
+    //     const storedConnectedAddress = localStorage.getItem("connectedAddress");
+    //     if (storedConnectedAddress) {
+    //       await createProviderAndSigner();
+    //        await connectWallet();
+
+    //     }
+    //   } catch (error) {
+    //     console.error("Error loading wallet data:", error);
+    //   }
+    // };
+
+    // loadWalletData();
+  }, [address]);
 
   const handleConnectWallet = async () => {
-    await connectWallet();
+    const { address, balance } = await connectWallet();
+    setAmountToken(balance);
+    setAddress(address);
   };
 
   // const handleConnectWallet = async () => {
@@ -40,7 +75,7 @@ export const Header = () => {
   return (
     <HeaderBox>
       <PageLink to="/">Logo</PageLink>
-      {!connectedAddress && !balance ? (
+      {!address && !amountToken ? (
         <ConnectButton
           type="button"
           onClick={handleConnectWallet}
@@ -50,8 +85,8 @@ export const Header = () => {
         </ConnectButton>
       ) : (
         <InfoContainer>
-          {balance && <p>{balance}</p>}
-          {connectedAddress && <p>{shortenAddress(connectedAddress)}</p>}
+          {amountToken && <p>{amountToken}</p>}
+          {address && <p>{shortenAddress(address)}</p>}
         </InfoContainer>
       )}
     </HeaderBox>
