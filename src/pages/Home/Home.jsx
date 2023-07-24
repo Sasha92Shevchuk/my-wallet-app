@@ -1,4 +1,4 @@
-import { TokenTransferForm } from "../components/TokenTransferForm/TokenTransferForm";
+import { TokenTransferForm } from "../../components/TokenTransferForm/TokenTransferForm";
 
 const Home = () => {
   return (

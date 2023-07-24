@@ -25,8 +25,8 @@ export const Header = () => {
         // const storedConnectedAddress = localStorage.getItem("connectedAddress");
         if (address) {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
-          const bal = await provider.getSigner().getBalance();
-          const balanceInEther = ethers.utils.formatEther(bal);
+          const balance = await provider.getSigner().getBalance();
+          const balanceInEther = ethers.utils.formatEther(balance);
           const roundedBalance = parseFloat(balanceInEther).toFixed(6);
           setAmountToken(roundedBalance);
         }
@@ -75,6 +75,7 @@ export const Header = () => {
   return (
     <HeaderBox>
       <PageLink to="/">Logo</PageLink>
+      <PageLink to="info">Information</PageLink>
       {!address && !amountToken ? (
         <ConnectButton
           type="button"

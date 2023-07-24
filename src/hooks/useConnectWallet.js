@@ -61,7 +61,6 @@ export const useConnectWallet = () => {
       }
     }
     try {
-      console.log(signer);
       const storedConnectedAddress = getConnectedAddressFromStorage();
       if (storedConnectedAddress) {
         const balance = await signer.getBalance(storedConnectedAddress);
