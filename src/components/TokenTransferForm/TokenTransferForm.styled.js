@@ -25,3 +25,12 @@ export const Label = styled.label`
     font-size: 16px;
   }
 `;
+
+export const Submit = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 40px;
+  border: none;
+`;

@@ -35,6 +35,31 @@ export const PageLink = styled(NavLink)`
   }
 `;
 
+export const BlockWallet = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+`;
+export const InfoLink = styled(NavLink)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: 25px;
+  transition: all 250ms ease;
+  box-shadow: 0px 3.4369285106658936px 3.4369285106658936px 0px #00000040;
+  &.active {
+    background-color: #5cd3a8;
+  }
+  :hover,
+  :focus {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    outline: none;
+  }
+`;
+
 export const ConnectButton = styled.button`
   display: flex;
   align-items: center;

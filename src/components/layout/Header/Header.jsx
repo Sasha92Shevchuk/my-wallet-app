@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 // import { connectWallet } from "../../../helpers/api";
+import { Link } from "react-router-dom";
+import { IoMdHelpCircleOutline } from "react-icons/io";
 import {
+  BlockWallet,
   ConnectButton,
   HeaderBox,
   InfoContainer,
-  PageLink,
+  InfoLink,
 } from "./Header.styled";
 import { useConnectWallet } from "../../../hooks/useConnectWallet";
+import { Logo } from "../../Logo/Logo";
+import { LoaderWallet } from "../../Loader/Loader";
 // import { useProviderAndSigner } from "../../../hooks/useProviderAndSigner";
 
 export const Header = () => {
@@ -36,21 +41,6 @@ export const Header = () => {
     };
 
     loadWalletData();
-
-    // const loadWalletData = async () => {
-    //   try {
-    //     const storedConnectedAddress = localStorage.getItem("connectedAddress");
-    //     if (storedConnectedAddress) {
-    //       await createProviderAndSigner();
-    //        await connectWallet();
-
-    //     }
-    //   } catch (error) {
-    //     console.error("Error loading wallet data:", error);
-    //   }
-    // };
-
-    // loadWalletData();
   }, [address]);
 
   const handleConnectWallet = async () => {
@@ -58,12 +48,6 @@ export const Header = () => {
     setAmountToken(balance);
     setAddress(address);
   };
-
-  // const handleConnectWallet = async () => {
-  //   const { address, balance } = await connectWallet();
-  //   setConnectedAddress(address);
-  //   setBalance(balance);
-  // };
 
   const shortenAddress = (address) => {
     if (address.length > 9) {
@@ -74,22 +58,28 @@ export const Header = () => {
   };
   return (
     <HeaderBox>
-      <PageLink to="/">Logo</PageLink>
-      <PageLink to="info">Information</PageLink>
-      {!address && !amountToken ? (
-        <ConnectButton
-          type="button"
-          onClick={handleConnectWallet}
-          disabled={isConnecting}
-        >
-          {isConnecting ? "Connecting..." : "Connect wallet"}{" "}
-        </ConnectButton>
-      ) : (
-        <InfoContainer>
-          {amountToken && <p>{amountToken}</p>}
-          {address && <p>{shortenAddress(address)}</p>}
-        </InfoContainer>
-      )}
+      <Link to="/">
+        <Logo />
+      </Link>
+      <BlockWallet>
+        <InfoLink to="info">
+          <IoMdHelpCircleOutline size={50} />
+        </InfoLink>
+        {!address && !amountToken ? (
+          <ConnectButton
+            type="button"
+            onClick={handleConnectWallet}
+            disabled={isConnecting}
+          >
+            {isConnecting ? <LoaderWallet /> : "Connect wallet"}{" "}
+          </ConnectButton>
+        ) : (
+          <InfoContainer>
+            {amountToken && <p>{amountToken}</p>}
+            {address && <p>{shortenAddress(address)}</p>}
+          </InfoContainer>
+        )}
+      </BlockWallet>
     </HeaderBox>
   );
 };

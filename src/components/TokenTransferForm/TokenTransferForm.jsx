@@ -1,8 +1,9 @@
 import { useState } from "react";
 // import { ethers } from "ethers";
-import { Form, Label } from "./TokenTransferForm.styled";
+import { Form, Label, Submit } from "./TokenTransferForm.styled";
 // import { transferToken } from "../../helpers/api";
 import { useTransferToken } from "../../hooks/useTransferToken";
+import { LoaderBtn } from "../Loader/Loader";
 
 export const TokenTransferForm = () => {
   const [recipientAddress, setRecipientAddress] = useState("");
@@ -49,9 +50,9 @@ export const TokenTransferForm = () => {
             required
           />
         </Label>
-        <button type="submit" disabled={isTransactionPending}>
-          {isTransactionPending ? "Transaction Pending..." : "Button"}
-        </button>
+        <Submit type="submit" disabled={isTransactionPending}>
+          {isTransactionPending ? <LoaderBtn /> : "Button"}
+        </Submit>
       </Form>
     </>
   );
