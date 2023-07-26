@@ -52,9 +52,7 @@ export const useConnectWallet = () => {
     }
     if (!signer || !provider) {
       try {
-        console.log("перед створенням провайдера");
         await createProviderAndSigner();
-        console.log("після створення провайдера");
       } catch (error) {
         console.error("Error creating provider and signer:", error);
         throw new Error("No wallet found");

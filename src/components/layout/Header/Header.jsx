@@ -13,6 +13,7 @@ import {
 import { useConnectWallet } from "../../../hooks/useConnectWallet";
 import { Logo } from "../../Logo/Logo";
 import { LoaderWallet } from "../../Loader/Loader";
+//import { useTransferToken } from "../../../hooks/useTransferToken";
 // import { useProviderAndSigner } from "../../../hooks/useProviderAndSigner";
 
 export const Header = () => {
@@ -21,8 +22,40 @@ export const Header = () => {
     localStorage.getItem("connectedAddress")
   );
   const [amountToken, setAmountToken] = useState("");
-
+  console.log("Header ~ amountToken:", amountToken);
+  // const { amountFinally } = useTransferToken();
+  // console.log(amountFinally); // була ідея після виконання трансферу виконати запит за балансом та передати нове значення
+  // в хуку useTransferToken дописав код
   // const { createProviderAndSigner } = useProviderAndSigner();
+
+  useEffect(() => {
+    // Функція, яка отримує і оновлює баланс
+    const fetchBalance = async () => {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const bal = await provider.getSigner().getBalance();
+        const balanceInEther = ethers.utils.formatEther(bal);
+        const roundedBalance = parseFloat(balanceInEther).toFixed(6);
+        if (address) {
+          setAmountToken(roundedBalance);
+        }
+      } catch (error) {
+        console.error("Error fetching balance:", error);
+      }
+    };
+
+    // Викликаємо функцію при монтуванні компоненти
+
+    fetchBalance();
+
+    // Підписуємося на подію зміни балансу, щоб оновлювати значення у реальному часі
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    provider.on("block", fetchBalance);
+
+    return () => {
+      provider.off("block", fetchBalance);
+    };
+  }, []);
 
   useEffect(() => {
     const loadWalletData = async () => {
@@ -71,7 +104,7 @@ export const Header = () => {
             onClick={handleConnectWallet}
             disabled={isConnecting}
           >
-            {isConnecting ? <LoaderWallet /> : "Connect wallet"}{" "}
+            {isConnecting ? <LoaderWallet /> : "Connect wallet"}
           </ConnectButton>
         ) : (
           <InfoContainer>
