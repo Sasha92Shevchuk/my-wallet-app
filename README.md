@@ -2,6 +2,7 @@
 
 ## Overview
 
+Overview
 This project is a simple application for connecting an Ethereum wallet. It allows users to get your balance and wallet address, as well as send ethers to other addresses. Click to see demo https://my-wallet-app-dx.vercel.app/
 
 ## Installation
