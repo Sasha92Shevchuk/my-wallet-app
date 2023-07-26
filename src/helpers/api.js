@@ -11,9 +11,6 @@ export const isValidEthereumAddress = (address) => {
 export const isValidTransferAmount = (amount) => {
   const parsedAmount = parseFloat(amount);
   return (
-    !isNaN(parsedAmount) &&
-    parsedAmount >= 0.000001 &&
-    parsedAmount <= 100000 &&
-    parsedAmount % 10 === 0
+    !isNaN(parsedAmount) && parsedAmount >= 0.000001 && parsedAmount <= 100000
   );
 };
