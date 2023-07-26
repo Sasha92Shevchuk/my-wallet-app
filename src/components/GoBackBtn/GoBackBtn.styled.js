@@ -5,6 +5,7 @@ export const BackLink = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 110px;
   gap: 10px;
   margin-left: 10px;
   color: #fff;

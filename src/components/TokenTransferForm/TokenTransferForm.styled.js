@@ -15,7 +15,7 @@ export const Label = styled.label`
   flex-direction: column;
   align-items: flex-start;
   input {
-    width: 300px;
+    min-width: 200px;
     height: 20px;
     padding: 10px;
     border: none;
@@ -23,6 +23,9 @@ export const Label = styled.label`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin-top: 5px;
     font-size: 16px;
+    @media screen and (min-width: 768px) {
+      min-width: 350px;
+    }
   }
 `;
 
@@ -32,5 +35,6 @@ export const Submit = styled.button`
   align-items: center;
   width: 100px;
   height: 40px;
-  border: none;
+  border: 1px solid grey;
+  /* background-color: #5cd3a8; */
 `;

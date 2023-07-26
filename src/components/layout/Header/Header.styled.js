@@ -3,11 +3,16 @@ import { NavLink } from "react-router-dom";
 
 export const HeaderBox = styled.header`
   display: flex;
-
+  flex-wrap: wrap;
   /* box-shadow: 0px 10px 19px -3px rgba(148, 148, 148, 1); */
-  border-bottom: 1px solid red;
-  justify-content: space-between;
+  border-bottom: 1px solid #8c8c8c;
+  justify-content: center;
+  gap: 10px;
   padding: 10px;
+  @media screen and (min-width: 768px) {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
 `;
 
 export const PageLink = styled(NavLink)`
@@ -25,7 +30,7 @@ export const PageLink = styled(NavLink)`
   transition: all 250ms ease;
   box-shadow: 0px 3.4369285106658936px 3.4369285106658936px 0px #00000040;
   &.active {
-    background-color: #5cd3a8;
+    background-color: #8c8c8c;
   }
   :hover,
   :focus {
@@ -37,10 +42,14 @@ export const PageLink = styled(NavLink)`
 
 export const BlockWallet = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   gap: 20px;
   justify-content: center;
   align-items: center;
+  @media screen and (min-width: 768px) {
+    flex-wrap: nowrap;
+  }
 `;
 export const InfoLink = styled(NavLink)`
   display: flex;
@@ -48,10 +57,11 @@ export const InfoLink = styled(NavLink)`
   justify-content: center;
   width: fit-content;
   height: 25px;
+  color: #8c8c8c;
   transition: all 250ms ease;
   box-shadow: 0px 3.4369285106658936px 3.4369285106658936px 0px #00000040;
   &.active {
-    background-color: #5cd3a8;
+    color: green;
   }
   :hover,
   :focus {
@@ -92,7 +102,7 @@ export const InfoContainer = styled.div`
   border-radius: 10px;
   font-size: 22px;
   font-weight: bold;
-  background-color: rgb(235, 216, 255);
+  background-color: #5cd3a8;
   color: #373737;
   transition: all 250ms ease;
   box-shadow: 0px 3.4369285106658936px 3.4369285106658936px 0px #00000040;
