@@ -1,9 +1,12 @@
 import { useState } from "react";
-// import { ethers } from "ethers";
 import { Form, Label, Submit } from "./TokenTransferForm.styled";
-// import { transferToken } from "../../helpers/api";
 import { useTransferToken } from "../../hooks/useTransferToken";
 import { LoaderBtn } from "../Loader/Loader";
+import {
+  isValidEthereumAddress,
+  isValidTransferAmount,
+} from "../../helpers/api";
+import { toast } from "react-toastify";
 
 export const TokenTransferForm = () => {
   const [recipientAddress, setRecipientAddress] = useState("");
@@ -13,16 +16,16 @@ export const TokenTransferForm = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    if (!isValidEthereumAddress(recipientAddress)) {
+      toast.warning("Invalid Ethereum address format");
+      return;
+    }
 
+    if (!isValidTransferAmount(tokenAmount)) {
+      toast.warning("Invalid transfer amount");
+      return;
+    }
     await transferToken(recipientAddress, tokenAmount);
-
-    console.log(
-      "Відправити",
-      tokenAmount,
-      "токенів на адресу",
-      recipientAddress
-    );
-
     setRecipientAddress("");
     setTokenAmount("");
   };

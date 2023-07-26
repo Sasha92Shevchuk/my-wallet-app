@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { ethers } from "ethers";
+import { toast } from "react-toastify";
 import { useProviderAndSigner } from "./useProviderAndSigner";
+import { roundedBalance } from "../helpers/api";
 
 const metaMaskLinks = {
   chrome:
@@ -74,21 +75,22 @@ export const useConnectWallet = () => {
       await window.ethereum.request({ method: "eth_requestAccounts" });
       const connectedAddress = await signer.getAddress();
       const balance = await signer.getBalance();
-      const balanceInEther = ethers.utils.formatEther(balance);
-      const roundedBalance = parseFloat(balanceInEther).toFixed(6);
+      const roundedBalanceStr = roundedBalance(balance);
 
       localStorage.setItem("connectedAddress", connectedAddress);
 
       setConnectedAddress(connectedAddress);
-      setBalance(roundedBalance);
+      setBalance(roundedBalanceStr);
       setIsConnecting(false);
+
+      toast.success("The wallet is connected successfully");
 
       return {
         address: connectedAddress,
-        balance: roundedBalance,
+        balance: roundedBalanceStr,
       };
     } catch (error) {
-      console.error("Error connecting to wallet:", error);
+      toast.error("something went wrong, please try again");
       setIsConnecting(false);
       return {
         address: "",
