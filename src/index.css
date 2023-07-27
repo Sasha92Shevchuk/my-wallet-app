@@ -18,9 +18,10 @@ a {
   font-weight: 500;
   color: #5cd3a8;
   text-decoration: inherit;
+  transition: color 0.25s;
 }
 a:hover {
-  color: #5cd3a8;
+  color: #2bbeeb;
 }
 
 body {
@@ -51,10 +52,11 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.25s;
 }
 button:hover {
   border-color: #5cd3a8;
+  scale: 1.03;
 }
 button:focus,
 button:focus-visible {

@@ -1,9 +1,9 @@
+import { LogoContainer, LogoSvg } from "./Logo.styled";
+
 export const Logo = () => {
   return (
-    <div>
-      <svg
-        width="40"
-        height="60"
+    <LogoContainer>
+      <LogoSvg
         viewBox="0 0 256 417"
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="xMidYMid"
@@ -23,7 +23,7 @@ export const Logo = () => {
           d="M127.961 287.958l127.96-75.637-127.96-58.162z"
         />
         <path fill="#393939" d="M0 212.32l127.96 75.638v-133.8z" />
-      </svg>
-    </div>
+      </LogoSvg>
+    </LogoContainer>
   );
 };
