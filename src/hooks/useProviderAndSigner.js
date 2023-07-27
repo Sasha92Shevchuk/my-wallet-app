@@ -7,6 +7,9 @@ export const useProviderAndSigner = () => {
 
   const createProviderAndSigner = useCallback(async () => {
     if (!provider || !signer) {
+      if (!window.ethereum) {
+        return;
+      }
       const newProvider = new ethers.providers.Web3Provider(window.ethereum);
       const newSigner = newProvider.getSigner();
       setProvider(newProvider);

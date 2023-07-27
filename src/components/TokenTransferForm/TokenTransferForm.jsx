@@ -54,7 +54,7 @@ export const TokenTransferForm = () => {
           />
         </Label>
         <Submit type="submit" disabled={isTransactionPending}>
-          {isTransactionPending ? <LoaderBtn /> : "Button"}
+          {isTransactionPending ? <LoaderBtn /> : "Submit"}
         </Submit>
       </Form>
     </>

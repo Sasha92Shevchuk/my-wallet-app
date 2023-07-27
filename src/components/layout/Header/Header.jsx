@@ -23,6 +23,9 @@ export const Header = () => {
   const [amountToken, setAmountToken] = useState("");
 
   useEffect(() => {
+    if (!window.ethereum) {
+      return;
+    }
     const fetchBalance = async () => {
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
